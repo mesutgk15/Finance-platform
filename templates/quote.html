@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Get Quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post" class="mb-5">
+        <input type="text" autocomplete="on" autofocus class="form-control mx-auto w-auto mb-3" id="symbol" name="symbol" placeholder="Stock Symbol">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    {% if symbols %}
+        <section>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-dark">
+                            <td>{{symbols["symbol"]}}</td>
+                            <td>{{symbols["name"]}}</td>
+                            <td>{{symbols["price"]  | usd }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

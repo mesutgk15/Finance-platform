@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stock Portfolio
+{% endblock %}
+
+{% block main %}
+
+
+    <section class="container text-center mb-2 ms-1">
+            <div class="row g-2">
+              <div class="w-auto col-6">
+                <div class="p-3 border bg-light"><span style="font-weight: bold">User Cash Balance: </span> <span style="color: green; font-weight: bold">{{ cash_balance | usd }}</span></div>
+              </div>
+            </div>
+    </section>
+
+    <h3 class="mb-5">Stock Portfolio</h3>
+
+    <section>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Current Price</th>
+                        <th>Quantity Owned</th>
+                        <th>Total Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in stocks %}
+                        {% if stock["stock_qty"] %}
+                            <tr class="table-dark">
+                                <td>{{stock["symbol"]}}</td>
+                                <td>{{stock["name"]}}</td>
+                                <td>{{stock["current_price"] | usd }}</td>
+                                <td>{{stock["stock_qty"]}}</td>
+                                <td>{{stock["total_value"] | usd}}</td>
+                                <td>
+                                    <form action="/sell" method="post">
+                                        <input name="symbol" hidden value="{{stock['symbol']}}">
+                                        <input name="shares" type="number" style="width:3em"autocomplete="off">
+                                        <button class="btn btn-primary btn-sm" type="submit">Sell</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+{% endblock %}

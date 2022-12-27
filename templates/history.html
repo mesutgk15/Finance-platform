@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction History
+{% endblock %}
+
+{% block main %}
+
+    <section class="container text-center mb-5 ms-1">
+            <div class="row g-2">
+              <div class="w-auto col-6">
+                <div class="p-3 border bg-light"><span style="font-weight: bold">User Cash Balance: </span> <span style="color: green; font-weight: bold">{{ cash_balance | usd }}</span></div>
+              </div>
+            </div>
+    </section>
+
+    <h3 class="mb-5">Transaction History</h3>
+
+    <section>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Transaction Price</th>
+                        <th>Shares</th>
+                        <th>Buy or Sell</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Transaction Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transaction_history %}
+                        <tr class="table-dark">
+                            <td>{{transaction["symbol"]}}</td>
+                            <td>{{transaction["name"]}}</td>
+                            <td>{{transaction["price"] | usd }}</td>
+                            <td>{{transaction["quantity"]}}</td>
+                            {% if transaction["buy_sell"] == "BUY" %}
+                                <td style="background-color: green;">{{transaction["buy_sell"]}}</td>
+                            {% else %}
+                                <td style="background-color: red;">{{transaction["buy_sell"]}}</td>
+                            {% endif %}
+
+                            <td>{{transaction["date"]}}</td>
+                            <td>{{transaction["time"]}}</td>
+                            <td>{{transaction["transaction_value"] | usd }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+{% endblock %}

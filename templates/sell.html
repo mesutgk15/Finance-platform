@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell Stocks
+{% endblock %}
+
+{% block main %}
+
+
+
+    <form action="/sell" method="post" class="mb-5">
+        <select autofocus class="form-select mx-auto w-auto mb-3" id="symbol" name="symbol">
+            <option selected disabled>Select Stock to Sell</option>
+            {% for possible_sell in possible_sells %}
+                <option value="{{possible_sell['symbol']}}">{{possible_sell["symbol"]}}, {{possible_sell["name"]}}, Shares: {{possible_sell["shares"]}}</option>
+            {% endfor %}
+        </select>
+        <input type="number" autocomplete="off" class="form-control mx-auto mb-3 sizing" id="shares" name="shares" placeholder="Number of Shares to Sell">
+        <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+
+    <script>
+        let input = document.querySelector(".sizing");
+        let new_length = (input.getAttribute('placeholder')).length
+        input.style.width = (new_length * 10) + 40 + "px";
+    </script>
+
+{% endblock %}
